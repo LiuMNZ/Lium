@@ -1,0 +1,41 @@
+ 人有体力、情商、智商的高峰日子，它们分别每隔 23天、28天和33天出现一次。对于每个人，我们想 知道何时三个高峰落在同一天。给定三个高峰出现 的日子p,e和i(不一定是第一次高峰出现的日子), 再给定另一个指定的日子d，你的任务是输出日子d 之后，下一次三个高峰落在同一天的日子(用距离d 的天数表示)。例如:给定日子为10，下次出现三 个高峰同一天的日子是12，则输出2。
+ 输入
+输入四个整数:p, e, i和d。 p, e, i分别表示体力、情感和智力 高峰出现的日子。d是给定的日子，可能小于p, e或 i。所有给 定日子是非负的并且小于或等于365，所求的日子小于或等于 21252。
+ 输出
+ 从给定日子起，下一次三个高峰同一天的日子(距离给定日子
+的天数)。
+
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+using namespace std;
+int main(){
+    int p,e,i,d,a,count=0;
+    while(scanf("%d%d%d%d",&p,&e,&i,&d)&&p!=-1){
+        count++;
+        for(a=d+1;(a-p)%23;a++);
+        for(;(a-e)%28;a=a+23);
+        for(;(a-i)%33;a=a+23*28);
+        printf("Case %d: the next triple peak occurs in %d days.\n",count,a-d);
+    }
+    return 0;
+}
+/*输入样例：
+0 0 0 0
+0 0 0 100
+5 20 34 325 
+4 5 6 7 
+283 102 23 320 
+203 301 203 40 
+-1 -1 -1 -1
+输出样例：
+Case 1: the next triple peak occurs in 21252 days. 
+Case 2: the next triple peak occurs in 21152 days. 
+Case 3: the next triple peak occurs in 19575 days. 
+Case 4: the next triple peak occurs in 16994 days. 
+Case 5: the next triple peak occurs in 8910 days. 
+Case 6: the next triple peak occurs in 10789 days.*/
+/*解题思路：
+肯定是不能挨个试的。第一个循环：确保得出的是23的倍数（这个需要从给出的d开始挨个试）；第二个循环：确保得出的是23和28的倍数；第三个循环：确保得出的是23、28和33的倍数
+三个for循环括号里的第二个语句很巧：它保证了一找到符合本语句条件的数就跳出循环，这样在走完三个for循环后一定能够找到符合条件的数。
+*/
